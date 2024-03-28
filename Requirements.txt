@@ -1,0 +1,476 @@
+Main graphics Manager: Add Subscriber button 
+Create promotion button Show users Graphics Manager 
+Add Subscriber: Text fields and drop-down menus to 
+choose the rate Graphics Create Promotion: Promotion Name text field Section for each of the three services it has: 
+Text field for cost Field for unit limit (0 for unlimited) Checkbox for monthly fixed cost Create tariff button Graphics Show Users: 
+List of users with a Details button for each By clicking on the Details button: Small window showing usage percentages versus limit for each service
+Main Subscriber Graphic: Balance Call button, Minutes text box SMS button Connection button, KB text box Top up button (with amount) 
+Drop-down menu Change Rate and 
+Drop-down menu with rate
+
+SUBSCRIBER FACE:
+Balance button to show balance.
+Button Call with a textbox for minutes.
+Button SMS to send message (No text Box) User will click and sms cost will be deducted
+Button Connection with textbox for Kilobytes. 
+Button Top up with textbox for amount.
+Top-down menu with all available tariffs, clicking on one of them the user will change promotion ( Combo Box for Tariff Plan)
+
+ADMIN FACE:
+Add Subscriber Button -> brings to a screen to add a user by name, surname, number, residence, tariff plan.
+Add Promotion -> brings to a screen to add a promotion detail having promotion name, call charges, message charges, data connection charges.
+Show users -> brings to a screen where all users are shown with quantity consumed for each service (call, SMS and connection)
+
+Data will be stored in JSON files.
+Java Eclipse will be Used with windows Builder Swing (JFrame, JPanel, JButton)
+Java SDK is 17 selected.
+Requirements:
+Zip file of Code
+
+
+//package telephony;
+//
+//import org.json.*;
+//import java.util.HashMap;
+//import java.util.Map;
+//import java.io.FileWriter;
+//import java.io.IOException;
+//
+//
+//
+//
+//// Subscriber class representing a telephone subscriber
+//class Subscriber {
+//    private String name; // his name
+//    private String surName; // his surName
+//    private String residence; // his living place
+//    private String phoneNumber; // his phone number
+//    private Account account; // account class object
+//
+//    // Constructor
+//    public Subscriber(String name,String surName, String residence, String phoneNumber, Account account) {
+//        this.name = name;
+//        this.phoneNumber = phoneNumber;
+//        this.account = account;
+//        this.surName = surName;
+//        this.residence = residence;
+//    }
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setSurName(String surName) {
+//        this.surName = surName;
+//    }
+//
+//    public String getSurName() {
+//        return surName;
+//    }
+//
+//    public void setAccount(Account account) {
+//        this.account = account;
+//    }
+//
+//    public Account getAccount() {
+//        return account;
+//    }
+//
+//    public void setResidence(String residence) {
+//        this.residence = residence;
+//    }
+//
+//    public String getResidence() {
+//        return residence;
+//    }
+//
+//    public void setPhoneNumber(String phoneNumber) {
+//        this.phoneNumber = phoneNumber;
+//    }
+//
+//    public String getPhoneNumber() {
+//        return phoneNumber;
+//    }
+//
+//    public void makeCall(double duration) {
+//        double cost =  account.calculateCallCost(duration);
+//        account.deductBalance(cost);
+//    }
+//
+//    public void sendMessage() {
+//        double cost = account.calculateMessageCost();
+//        account.deductBalance(cost);
+//    }
+//
+//    public void makeDataConnection(int kilobytes) {
+//        double cost = account.calculateDataUsageCost(kilobytes);
+//        account.deductBalance(cost);
+//    }
+//
+//    public void joinPromotion(TariffPlan plan) {
+//        account.applyTariffPlan(plan);
+//    }
+//
+//    public void topUp(double amount) {
+//        account.topUp(amount);
+//    }
+//    @Override
+//    public String toString() {
+//        return name + ", " + surName + ", " + residence + ", " + phoneNumber + ", " + account.toString();
+//    }
+//
+//
+//}
+//class TariffPlan {
+//	
+//    private double smsCost; // per sms cost, like user send 1 sms == $0.1 for that one message
+//    private double callCostPerMinute; // Call cost per minute
+//    private double dataCostPerKiloByte; // data connection charges pet KB
+//    private String name;
+//    private double tariffTotalPrice;
+//    
+//
+//    public TariffPlan(String name, double smsCost, double callCostPerMinute, double dataCostPerKiloByte) {
+//    	this.name = name;
+//        this.tariffTotalPrice = smsCost + callCostPerMinute + dataCostPerKiloByte;
+//        this.smsCost = smsCost;
+//        this.callCostPerMinute = callCostPerMinute;
+//        this.dataCostPerKiloByte = dataCostPerKiloByte;
+//    }
+//    // Getters and setters
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public void setTariffTotalPrice() {
+//    	tariffTotalPrice = smsCost + callCostPerMinute + dataCostPerKiloByte;
+//    }
+//    
+//    public double getTariffTotalPrice() {
+//    	return tariffTotalPrice;
+//    }
+//    
+//    public void setDataCostPerKiloByte(double dataCostPerKiloByte) {
+//        this.dataCostPerKiloByte = dataCostPerKiloByte;
+//    }
+//
+//    public double getDataCostPerKiloByte() {
+//        return dataCostPerKiloByte;
+//    }
+//
+//    public void setCallCostPerMinute(double callCostPerMinute) {
+//        this.callCostPerMinute = callCostPerMinute;
+//    }
+//
+//    public void setSmsCost(double smsCost) {
+//        this.smsCost = smsCost;
+//    }
+//
+//    public double getSmsCost() {
+//        return smsCost;
+//    }
+//
+//    public double getCallCostPerMinute() {
+//        return callCostPerMinute;
+//    }
+//    @Override
+//    public String toString() {
+//        return name + ", " + smsCost + ", " + callCostPerMinute + ", " + dataCostPerKiloByte;
+//    }
+//
+//}
+//
+//// Account class representing the account of a subscriber
+//class Account {
+//    private double balance;
+//
+//    private double totalCallCost;
+//
+//    private double totalMessagesCost;
+//
+//    private double totalDataUsageCost;
+//
+//    TariffPlan tariffPlan;
+//    
+//
+//    public Account(TariffPlan plan, double minutes, int kb) {
+//        this.tariffPlan = plan;
+//        this.calculateMessageCost();
+//        this.calculateCallCost(minutes);
+//        this.calculateDataUsageCost(kb);
+//        
+//
+//    }
+//    TariffPlan getTariffPlan() {
+//    	
+//    	return tariffPlan;
+//    }
+//    @Override
+//    public String toString() {
+//        return balance + ", " + totalMessagesCost + ", " + totalCallCost  + ", " + totalDataUsageCost + "," + tariffPlan.toString();
+//    }
+//    public double calculateMessageCost() {
+//        // Retrieve the cost per message from the tariff plan
+//        double cost = tariffPlan.getSmsCost();
+//        totalMessagesCost += cost;
+//        return cost;
+//    }
+//
+//    public double calculateCallCost(double minutes) {
+//        // Calculate the cost of the call based on the duration and rate per minute
+//        double cost = minutes * tariffPlan.getCallCostPerMinute();
+//        totalCallCost += cost;
+//        return cost;
+//    }
+//
+//    public double calculateDataUsageCost(int kilobytes) {
+//        // Calculate the cost based on the tariff plan's rate per kilobyte
+//        double cost = kilobytes * tariffPlan.getDataCostPerKiloByte();
+//        totalDataUsageCost += cost;
+//        return cost;
+//    }
+//    public double getTotalCallCost() {
+//    	return totalCallCost;
+//    }
+//    
+//    public double getTotalMessagesCost() {
+//    	return totalMessagesCost;
+//    }
+//    
+//    public double getTotalDataUsageCost() {
+//    	return totalDataUsageCost;
+//    }
+//    
+//    public void setBalance(double balance) {
+//        this.balance = balance;
+//    }
+//    public double getBalance() {
+//        return balance;
+//    }
+//
+//    public void deductBalance(double amount) {
+//        balance -= amount;
+//    }
+//
+//    public void applyTariffPlan(TariffPlan plan) {
+//        this.tariffPlan = plan;
+//    }
+//
+//    public void topUp(double amount) {
+//        balance += amount;
+//    }
+//
+//}
+//
+//
+//// PaymentStrategy interface representing different payment methods
+//interface PaymentStrategy {
+//    void pay(double amount);
+//}
+//
+//// CashPaymentStrategy class for cash payments
+//class CashPaymentStrategy implements PaymentStrategy {
+//    @Override
+//    public void pay(double amount) {
+//        System.out.println("Paid " + amount + " via cash.");
+//    }
+//}
+//
+//// CreditCardPaymentStrategy class for credit card payments
+//class CreditCardPaymentStrategy implements PaymentStrategy {
+//    @Override
+//    public void pay(double amount) {
+//        System.out.println("Paid " + amount + " via credit card.");
+//    }
+//}
+//
+//// DebitCardPaymentStrategy class for debit card payments
+//class DebitCardPaymentStrategy implements PaymentStrategy {
+//    @Override
+//    public void pay(double amount) {
+//        System.out.println("Paid " + amount + " via debit card.");
+//    }
+//}
+//
+//// Observer interface for observing changes in account balance
+//interface AccountObserver {
+//    void update(double newBalance);
+//}
+//
+//// SubscriberObserver class for observing changes in subscriber's account balance
+//class SubscriberObserver implements AccountObserver {
+//    private Subscriber subscriber;
+//
+//    public SubscriberObserver(Subscriber subscriber) {
+//        this.subscriber = subscriber;
+//    }
+//
+//    @Override
+//    public void update(double newBalance) {
+//        System.out.println("Account balance updated for subscriber " + subscriber.getName() + ": " + newBalance);
+//    }
+//}
+//// Factory Design Pattern
+//// SubscriberFactory interface
+//interface SubscriberFactory {
+//    Subscriber createSubscriber(String name, String surName, String residence, String phoneNumber, Account account);
+//}
+//
+//class ConcreteSubscriberFactory implements SubscriberFactory {
+//    @Override
+//    public Subscriber createSubscriber(String name, String surName, String residence, String phoneNumber, Account account) {
+//        return new Subscriber(name, surName, residence, phoneNumber, account);
+//    }
+//}
+//
+//interface TariffPlanFactory {
+//    TariffPlan createTariffPlan(String name, double smsCost, double minutesCost,  double dataConnectionCost);
+//}
+//class ConcreteTariffPlanFactory implements TariffPlanFactory {
+//    @Override
+//    public TariffPlan createTariffPlan(String name, double smsCost, double minutesCost,  double dataConnectionCost) {
+//        return new TariffPlan(name, smsCost, minutesCost,  dataConnectionCost);
+//    }
+//}
+//
+//// Command interface representing user actions
+//interface Command {
+//    void execute();
+//}
+//
+//// RegisterSubscriberCommand class for registering a new subscriber
+//class RegisterSubscriberCommand implements Command {
+//    private Administrator administrator;
+//    private String name;
+//    private String surName;
+//    private String residence;
+//    private String phoneNumber;
+//    private Account account;
+//
+//    public RegisterSubscriberCommand(Administrator administrator, String name, String surName, String residence, String phoneNumber, Account account) {
+//        this.administrator = administrator;
+//        this.name = name;
+//        this.surName = surName;
+//        this.residence = residence;
+//        this.phoneNumber = phoneNumber;
+//        this.account = account;
+//    }
+//
+//    @Override
+//    public void execute() {
+//        administrator.registerSubscriber(name, surName, residence, phoneNumber, account);
+//    }
+//}
+//
+//// InsertPromotionCommand class for inserting a new promotion
+//class RegisterTariffPlanCommand implements Command {
+//    private Administrator administrator;
+//    private String name;
+//    private double dataConnectionCost;
+//    private double minutesCost;
+//    private double smsCost;
+//
+//    public RegisterTariffPlanCommand(Administrator administrator, String name, double smsCost, double minutesCost,  double dataConnectionCost) {
+//        this.administrator = administrator;
+//        this.name = name;
+//        this.dataConnectionCost = dataConnectionCost;
+//        this.minutesCost = minutesCost;
+//        this.smsCost = smsCost;
+//    }
+//
+//    @Override
+//    public void execute() {
+//        administrator.registerTariffPlan(name,smsCost, minutesCost,  dataConnectionCost);
+//    }
+//}
+//
+//// UsagePercentageCommand class for showing the percentages of use of each service for a subscriber
+//class UsagePercentageCommand implements Command {
+//    private Administrator administrator;
+//    private Subscriber subscriber;
+//
+//    public UsagePercentageCommand(Administrator administrator, Subscriber subscriber) {
+//        this.administrator = administrator;
+//        this.subscriber = subscriber;
+//    }
+//
+//    @Override
+//    public void execute() {
+//        // Logic to calculate and display usage percentages for the subscriber
+//        administrator.showUsagePercentage(subscriber);
+//    }
+//}
+//
+//// Administrator class responsible for administrator operations
+//class Administrator {
+//    private Map<String, Subscriber> subscribers;
+//    private Map<String, TariffPlan> promotions;
+//
+//    public Administrator() {
+//        this.subscribers = new HashMap<>();
+//        this.promotions = new HashMap<>();
+//    }
+// // Function to store a single subscriber data to JSON file
+//    public void storeSubscriberToJson(Subscriber subscriber, String fileName) {
+//        JSONObject subscriberObj = new JSONObject();
+//        subscriberObj.put("name", subscriber.getName());
+//        subscriberObj.put("surname", subscriber.getSurName());
+//        subscriberObj.put("residence", subscriber.getResidence());
+//        subscriberObj.put("phoneNumber", subscriber.getPhoneNumber());
+//        subscriberObj.put("totalDataCharges", subscriber.getAccount().getTotalDataUsageCost());
+//        subscriberObj.put("totalCallCharges", subscriber.getAccount().getTotalCallCost());
+//        subscriberObj.put("totalMessageCharges", subscriber.getAccount().getTotalMessagesCost());
+//
+//        // Tariff Plan details
+//        JSONObject tariffPlanObj = new JSONObject();
+//        TariffPlan tariffPlan = subscriber.getAccount().getTariffPlan();
+//        tariffPlanObj.put("callCostPerMinute", tariffPlan.getCallCostPerMinute());
+//        tariffPlanObj.put("dataCostPerKiloByte", tariffPlan.getDataCostPerKiloByte());
+//        tariffPlanObj.put("smsCost", tariffPlan.getSmsCost());
+//        subscriberObj.put("tariffPlan", tariffPlanObj);
+//
+//        try (FileWriter file = new FileWriter(fileName,true)) {
+//            file.write(subscriberObj.toString());
+//            file.flush();
+//            System.out.println("Subscriber data stored in JSON file: " + fileName);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void registerSubscriber(String name, String surName, String residence, String phoneNumber, Account account) {
+//
+//        ConcreteSubscriberFactory createSubs = new ConcreteSubscriberFactory ();
+//        Subscriber subscriber = createSubs.createSubscriber(name, surName, residence, phoneNumber, account);
+//        subscribers.put(phoneNumber, subscriber);
+//        storeSubscriberToJson(subscriber, "Subscribers.json");
+//        System.out.println("New subscriber registered: " + subscriber.getName());
+//    }
+//    
+//
+//    public void registerTariffPlan(String name, double smsCost, double minutesCost,  double dataConnectionCost) {
+//        ConcreteTariffPlanFactory createPlan = new ConcreteTariffPlanFactory();
+//        TariffPlan plan = createPlan.createTariffPlan(name, smsCost, minutesCost,  dataConnectionCost);
+//        promotions.put(name, plan);
+//        System.out.println("New promotion inserted: " + plan.getName());
+//    }
+//
+//    public void showUsagePercentage(Subscriber subscriber) {
+//        // Logic to calculate and display usage percentages for the subscriber
+//        System.out.println("Usage percentages for subscriber: " + subscriber.getName());
+//    }
+//}
+//
+//// Main class to demonstrate the telephone carrier system
+//public class Classes {
+//    public static void main(String[] args) {
+//
+//    }
+//}

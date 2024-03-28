@@ -1,0 +1,26 @@
+Subscriber class has setters and getters.
+Data members for subscirber class are name,surname,phone,Account class object.
+Functions are there to load balance (Top UP Balance), make a Call function, send message function. Subcriber holding data about subscribers
+
+Account class has balance, total Messages sent, total call minutes done, total data usage done and their costs as well in total and tariff plan object
+Functions: Deduct Balance, Top up balance, and getters/setters for data members. It is used to hold user account
+
+TariffPlan class will have plans. Data members are name, limit for service, price for one message, call minute and data usage cost per kb.
+
+Adminstrator class will load data from Subscribers.json and store in it. Update function is also there to update data like when user
+changes his tariff Plan or make a call or do any call or use data. In adminstrator class, factory pattern classes functions are used to create subscribers
+and create tariff Plan.
+
+Command class is interface that has method execute overrided in Register Subscriber class and Register TariffPlan class to register users and add tariffplans utilizing
+Administrator class object to call its functions.
+
+Factory Pattern is implemented to create subscribers and tariffplan. SubscriberFactory interface has createSubscriber(parameters) functions 
+overrided in ConcreteSubscriberFactory class for its implementation and return Subscriber object. Similar logic is implemented for TariffPlan
+Creation.
+
+Strategy Pattern is used to detect which method is used for payment. Return a string of usage of payment method.
+
+
+
+
+ 
